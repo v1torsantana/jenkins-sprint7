@@ -3,30 +3,33 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps { checkout scm }
+            steps {
+                checkout scm
+            }
         }
 
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
+                bat 'npm install'
+                bat 'npm run build'
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t catalogo-service .'
+                bat 'docker build -t catalogo-service .'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh '''
-                    docker stop catalogo-service || true
-                    docker rm catalogo-service || true
-                    docker run -d --name catalogo-service -p 3002:3002 catalogo-service
+                bat '''
+                docker stop catalogo-service || echo nao rodando
+                docker rm catalogo-service || echo nao existe
+                docker run -d --name catalogo-service -p 3002:3002 catalogo-service
                 '''
             }
         }
     }
 }
+''
