@@ -11,8 +11,8 @@ pipeline {
         stage('Build') {
             steps {
                 dir('catalogo-service') {
-                    bat 'npm install'
-                    bat 'npm run build'
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
         }
@@ -20,16 +20,16 @@ pipeline {
         stage('Docker Build') {
             steps {
                 dir('catalogo-service') {
-                    bat 'docker build -t catalogo-service .'
+                    sh 'docker build -t catalogo-service .'
                 }
             }
         }
 
         stage('Deploy') {
             steps {
-                bat '''
-                docker stop catalogo-service || echo nao rodando
-                docker rm catalogo-service || echo nao existe
+                sh '''
+                docker stop catalogo-service || echo "nao rodando"
+                docker rm catalogo-service || echo "nao existe"
                 docker run -d --name catalogo-service -p 3002:3002 catalogo-service
                 '''
             }
