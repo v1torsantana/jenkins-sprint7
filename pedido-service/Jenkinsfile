@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps { checkout scm }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t pedido-service .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker stop pedido-service || true
+                    docker rm pedido-service || true
+                    docker run -d --name pedido-service -p 3001:3001 pedido-service
+                '''
+            }
+        }
+    }
+}

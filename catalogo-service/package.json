@@ -1,0 +1,18 @@
+{
+  "name": "catalogo-service",
+  "version": "1.0.0",
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/platform-express": "^10.4.20",
+    "@nestjs/typeorm": "^10.0.0",
+    "pg": "^8.10.0",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.17"
+  },
+  "scripts": {
+    "start": "nest start",
+    "start:prod": "node dist/main.js",
+    "build": "nest build"
+  }
+}
