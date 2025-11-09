@@ -12,10 +12,11 @@ pipeline {
             steps {
                 dir('catalogo-service') {
                     sh 'npm install'
-                    sh 'npm run build'
+                    sh 'npx nest build'
                 }
             }
         }
+
 
         stage('Docker Build') {
             steps {
