@@ -10,14 +10,18 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'npm install'
-                bat 'npm run build'
+                dir('catalogo-service') {
+                    bat 'npm install'
+                    bat 'npm run build'
+                }
             }
         }
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t catalogo-service .'
+                dir('catalogo-service') {
+                    bat 'docker build -t catalogo-service .'
+                }
             }
         }
 
@@ -32,4 +36,3 @@ pipeline {
         }
     }
 }
-''
