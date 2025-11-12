@@ -1,0 +1,6 @@
+SPRINT 7 - Jenkins
+✅ Criar pipeline catalogo-service
+❌ Criar pipeline pedido-service (estrutura igual, só repetir o modelo)
+❌ Entender e subir DHCP e DNS
+❌ Subir Kafka e realizar conversa entre os microsserviços
+❌ DevSecOps (mínimo: SAST simples, Trivy no build ou dependabot)

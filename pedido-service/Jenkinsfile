@@ -8,14 +8,18 @@ pipeline {
 
         stage('Build') {
             steps {
+                dir('pedido-service') {
                 sh 'npm install'
                 sh 'npm run build'
+                }
             }
         }
 
         stage('Docker Build') {
             steps {
+                dir('pedido-service') {
                 sh 'docker build -t pedido-service .'
+                }
             }
         }
 
