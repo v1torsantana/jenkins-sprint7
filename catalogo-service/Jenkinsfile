@@ -31,7 +31,7 @@ pipeline {
                 sh '''
                 docker stop catalogo-service || echo "nao rodando"
                 docker rm catalogo-service || echo "nao existe"
-                docker run -d --name catalogo-service -p 3002:3002 catalogo-service
+                docker run -d --name catalogo-service --network vinheria-net -p 3002:3002 catalogo-service
                 '''
             }
         }

@@ -28,7 +28,7 @@ pipeline {
                 sh '''
                     docker stop pedido-service || true
                     docker rm pedido-service || true
-                    docker run -d --name pedido-service -p 3001:3001 pedido-service
+                    docker run -d --name pedido-service --network vinheria-net -p 3001:3001 pedido-service
                 '''
             }
         }

@@ -1,6 +1,12 @@
 SPRINT 7 - Jenkins
 ✅ Criar pipeline catalogo-service
-❌ Criar pipeline pedido-service (estrutura igual, só repetir o modelo)
-❌ Entender e subir DHCP e DNS
-❌ Subir Kafka e realizar conversa entre os microsserviços
+✅ Criar pipeline pedido-service (estrutura igual, só repetir o modelo)
+
+Usar a VM windows para subir DHCP e DNS server
+  ❌ Instalar docker
+  ❌ Instalar imagem do Jenkins (~/jenkins/Dockerfile)
+  ❌ Rodar os pipes de novo
+  ❌ Usar essa máquina pra resolver DNS e DHCP
+  ❌ (Opcional) Kafka para conversar microsserviços
+  
 ❌ DevSecOps (mínimo: SAST simples, Trivy no build ou dependabot)
