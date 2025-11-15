@@ -3,14 +3,24 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps { checkout scm }
+            steps {
+                checkout scm
+            }
         }
 
         stage('Build') {
             steps {
                 dir('pedido-service') {
-                sh 'npm install'
-                sh 'npm run build'
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                dir('pedido-service') {
+                    sh 'trivy fs . || true'
                 }
             }
         }
@@ -18,8 +28,14 @@ pipeline {
         stage('Docker Build') {
             steps {
                 dir('pedido-service') {
-                sh 'docker build -t pedido-service .'
+                    sh 'docker build -t pedido-service .'
                 }
+            }
+        }
+
+        stage('Image Scan') {
+            steps {
+                sh 'trivy image pedido-service || true'
             }
         }
 

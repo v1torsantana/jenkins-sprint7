@@ -1,5 +1,5 @@
 pipeline {
-    agent any  // roda no container Jenkins ou host, mas Node e Docker já instalados
+    agent any
 
     stages {
         stage('Checkout') {
@@ -17,12 +17,25 @@ pipeline {
             }
         }
 
+        stage('Security Scan') {
+            steps {
+                dir('catalogo-service') {
+                    sh 'trivy fs . || true'
+                }
+            }
+        }
 
         stage('Docker Build') {
             steps {
                 dir('catalogo-service') {
                     sh 'docker build -t catalogo-service .'
                 }
+            }
+        }
+
+        stage('Image Scan') {
+            steps {
+                sh 'trivy image catalogo-service || true'
             }
         }
 
