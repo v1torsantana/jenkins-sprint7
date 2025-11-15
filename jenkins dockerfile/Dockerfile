@@ -2,24 +2,20 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Instala dependências básicas + Docker CLI + Node.js
+# Dependências básicas + Docker CLI
 RUN apt-get update && apt-get install -y \
-    curl \
-    gnupg \
-    lsb-release \
-    docker.io \
     git \
+    curl \
+    docker.io \
     build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    gnupg \
+    lsb-release
 
-# Instala Node.js 20
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && rm -rf /var/lib/apt/lists/*
+# Node.js 20.x + npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
 
-
-# Permite que o usuário Jenkins use Docker
+# Permite Jenkins usar Docker
 RUN usermod -aG docker jenkins
 
-USER root
-
+USER jenkins
