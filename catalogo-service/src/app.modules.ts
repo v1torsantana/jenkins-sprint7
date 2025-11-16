@@ -3,18 +3,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Produto } from './modules/produtos/produto.entity';
 import { ProdutoController } from './modules/produtos/produto.controller';
 import { ProdutoService } from './modules/produtos/produto.service';
+import { EstoqueController } from './modules/produtos/estoque.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',              // simples pra testar sem docker
-      database: 'catalogo.db',     // arquivo criado automaticamente
+      type: 'sqlite',
+      database: 'catalogo.db',
       entities: [Produto],
-      synchronize: true
+      synchronize: true,
     }),
-    TypeOrmModule.forFeature([Produto])
+    TypeOrmModule.forFeature([Produto]),
   ],
-  controllers: [ProdutoController],
+  controllers: [ProdutoController, EstoqueController],
   providers: [ProdutoService],
 })
 export class AppModule {}

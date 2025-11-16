@@ -18,4 +18,15 @@ export class ProdutoService {
     const produto = this.repo.create(data);
     return this.repo.save(produto);
   }
+
+  async ajustarEstoque(produtoId: number, quantidade: number) {
+    const produto = await this.repo.findOne({ where: { id: produtoId } });
+
+    if (!produto) {
+      throw new Error('Produto não encontrado');
+    }
+
+    produto.estoque += quantidade;
+    return this.repo.save(produto);
+  }
 }

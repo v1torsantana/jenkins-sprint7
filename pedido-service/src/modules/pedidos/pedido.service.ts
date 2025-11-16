@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Pedido } from './pedido.entity';
+import axios from 'axios';
 
 @Injectable()
 export class PedidoService {
@@ -14,8 +15,25 @@ export class PedidoService {
     return this.repo.find();
   }
 
-  criar(data: Partial<Pedido>): Promise<Pedido> {
-    const pedido = this.repo.create(data); // cria uma instância do tipo Pedido
-    return this.repo.save(pedido);         // retorna Promise<Pedido>
+  async criar(data: Partial<Pedido>): Promise<Pedido> {
+    const pedido = this.repo.create(data);
+    const saved = await this.repo.save(pedido);
+
+    try {
+      console.log(
+        `🔁 Ajustando estoque do produto ${saved.produtoId} em -${saved.quantidade}`,
+      );
+
+      await axios.post('http://catalogo.vinheria.local:3002/estoque/ajustar', {
+        produtoId: saved.produtoId,
+        quantidade: -saved.quantidade,
+      });
+
+      console.log('✅ Estoque ajustado com sucesso');
+    } catch (err) {
+      console.error('❌ Erro ao ajustar estoque no catálogo:', err.message);
+    }
+
+    return saved;
   }
 }
