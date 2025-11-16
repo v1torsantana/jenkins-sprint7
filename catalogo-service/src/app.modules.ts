@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MiddlewareConsumer, Module } from '@nestjs/common';import { TypeOrmModule } from '@nestjs/typeorm';
 import { Produto } from './modules/produtos/produto.entity';
 import { ProdutoController } from './modules/produtos/produto.controller';
 import { ProdutoService } from './modules/produtos/produto.service';
 import { EstoqueController } from './modules/produtos/estoque.controller';
+import { AuthMiddleware } from './auth.middleware';
 
 @Module({
   imports: [
@@ -18,4 +18,8 @@ import { EstoqueController } from './modules/produtos/estoque.controller';
   controllers: [ProdutoController, EstoqueController],
   providers: [ProdutoService],
 })
-export class AppModule {}
+export class AppModule {
+    configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*'); // protege todas rotas
+  }
+}
